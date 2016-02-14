@@ -39,6 +39,8 @@ public class Board extends JFrame implements ActionListener {
         JPanel pTop = new JPanel(new GridLayout(1,3));
         JPanel pBottom = new Grid();
 
+        pTop.setPreferredSize(new Dimension (100,200));
+        pBottom.setPreferredSize(new Dimension(260,260));
 
         /**
          * Create items for pTop
@@ -66,7 +68,7 @@ public class Board extends JFrame implements ActionListener {
         board.add(pBottom, BorderLayout.SOUTH);
 
         //Set size and visibility of board
-        setSize(300, 420);
+        setSize(280, 380);
         setVisible( true );
 
     }
