@@ -37,7 +37,7 @@ public class Board extends JFrame implements ActionListener {
          * pBottom : holds the game Grid
          */
         JPanel pTop = new JPanel(new GridLayout(1,3));
-        JPanel pBottom = new JPanel(new GridLayout(1,1));
+        JPanel pBottom = new Grid();
 
 
         /**
@@ -50,14 +50,6 @@ public class Board extends JFrame implements ActionListener {
         JButton resetButton = new JButton("Smiley");
         JLabel timeLabel = new JLabel("Time", SwingConstants.CENTER);
 
-
-        ///WILL DO IN GRID, SHOULD BE DELETED
-        //pBottom will be the Grid, blank for now
-        JButton gridLabel = new JButton("Grid");
-        gridLabel.setPreferredSize(new Dimension(300,300));
-        //Add Grid to the bottom panel
-        pBottom.add(gridLabel);
-        ///
 
         //Add the labels and button to the top panel
         pTop.add(mineLabel, BorderLayout.WEST);
