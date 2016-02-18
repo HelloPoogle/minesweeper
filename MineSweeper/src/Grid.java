@@ -34,7 +34,7 @@ public class Grid extends JPanel implements MouseListener {
     private ImageIcon questionStart;    //Question mark, not sure if a bomb is there
     private ImageIcon questionPressed;  //Press a label with a question mark
     private ImageIcon wrongFlag;        //Game end, reveals if an incorrect flag was placed
-
+    protected Board board;               //Save board instance internally
 
     //Indicator of whether or not the game has started (User has LEFT clicked)
     //0 = not in progress, 1 = in progress
@@ -43,10 +43,14 @@ public class Grid extends JPanel implements MouseListener {
 
 
     //Constructs a 10x10 game grid
-    Grid(){
+    Grid( Board board ){
+
         //Create a new 10x10 grid of labels that contains the game grid
         super(new GridLayout(10,10));
         gridArray = new JLabel[10][10];
+
+        //Save board instance
+        this.board = board;
 
         //User has not started the game
         gameStart = 0;

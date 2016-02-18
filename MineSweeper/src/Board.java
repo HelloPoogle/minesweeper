@@ -131,7 +131,7 @@ public class Board extends JFrame {
 		System.out.println ( "About page" );
 	}
 
-	protected void winGame () {
+	protected void winGame ( int score ) {
 
 	}
 
@@ -139,8 +139,12 @@ public class Board extends JFrame {
 
 	}
 
-	protected void updateFound () {
+	protected void updateFoundGame ( int found ) {
 		
+	}
+
+	protected void startTimerGame () {
+
 	}
 
 }
