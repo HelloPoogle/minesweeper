@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import javax.swing.*;
 
 public class Board extends JFrame implements ActionListener {
@@ -67,9 +68,10 @@ public class Board extends JFrame implements ActionListener {
         board.add(pTop, BorderLayout.CENTER);
         board.add(pBottom, BorderLayout.SOUTH);
 
-        //Set size and visibility of board
+        //Set size, visible, and non-resizable
         setSize(280, 380);
         setVisible( true );
+        setResizable(false);
 
     }
     // end of Board constructor
