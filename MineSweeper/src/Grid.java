@@ -290,12 +290,6 @@ public class Grid extends JPanel implements MouseListener {
                 return 0;
             }
 
-
-//            System.out.println("(" + x + "," + y + ")");
-//            System.out.println("(" + mineX + "," + mineY + ")");
-//            System.out.println();
-
-
             //If the current mine's coordinates are adjacent, increment surrounding mine count
             //Above
             if (mineX == (x - 1)) {
@@ -396,6 +390,7 @@ public class Grid extends JPanel implements MouseListener {
         //Get the label that was targeted
         JLabel l = (JLabel) e.getSource();
 
+        //DELETE THIS
         System.out.println(l.getIcon());
 
         //If the left mouse button was released
@@ -405,7 +400,7 @@ public class Grid extends JPanel implements MouseListener {
                 // Change the smiley to the start icon since the mouse was released
                 board.smiley.change ( Smiley.Type.SMILE_START);
             }
-            
+
             //If the game has not started yet,
             if(gameStart == 0) {
                 //Attempt to start the game and initialize field
@@ -439,7 +434,6 @@ public class Grid extends JPanel implements MouseListener {
             }
         }
 
-
         //If the right mouse button was released
         if (e.getButton() == 3){
             //Process the right click at the label
@@ -455,14 +449,21 @@ public class Grid extends JPanel implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        //Get the label that was targeted
+        JLabel l = (JLabel) e.getSource();
+
+        //If the current icon is blank
+        if(l.getIcon() != blankStart) {
+            return;
+        }
         //If the left mouse button is pressed
-        if ( e.getButton () == 1 ) {
-            //Check if the smiley is the start icon
-            if ( board.smiley.current != Smiley.Type.SMILE_START ) {
+        if (e.getButton () == 1) {
+            //If the smiley is the start icon
+            if (board.smiley.current != Smiley.Type.SMILE_START) {
             	return;
             }
-            //If so, change the icon to smiley O face upon a press
-            board.smiley.change ( Smiley.Type.SMILE_O);
+            //Change the smiley to a smiley O icon
+            board.smiley.change (Smiley.Type.SMILE_O);
         }
     }
 

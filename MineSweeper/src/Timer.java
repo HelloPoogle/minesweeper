@@ -44,8 +44,8 @@ public class Timer extends Display {
 	public Timer ( int initial ) {
 		// Run parent constructor and pass initial value
 		super ( initial );
-		// Initialize the time to initial
-		this.time = initial;
+		// Initialize the time to initial + 1 to account for 1 second delay
+		this.time = initial + 1;
 		// Initialize run flag to true initially
 		this.run = true;
 		// Initialize the thread and runnable function
