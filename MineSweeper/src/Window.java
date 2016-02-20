@@ -47,6 +47,8 @@ public class Window extends JFrame {
 		setDefaultCloseOperation ( JFrame.DISPOSE_ON_CLOSE );
 		// Set up the panel
 		setPanel ( rows, cols );
+		// Disable resizing
+		setResizable ( false );
 		// Add Panel to frame
 		add ( panel );
 		// Set the frame width and the height

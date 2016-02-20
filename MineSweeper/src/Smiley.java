@@ -31,7 +31,7 @@ public class Smiley extends JLabel {
 
 	/**
 	 * This data member saves the enum representation of the current state.
-	 * @var 	Type 			current
+	 * @var     Type            current
 	 */
 	protected Type current;
 

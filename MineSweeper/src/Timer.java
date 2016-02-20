@@ -64,7 +64,7 @@ public class Timer extends Display {
 			@Override
 			public void run () {
 				// Loop forever until we stop the thread
-				while ( Timer.run ) {
+				while ( true ) {
 					// Try to put the thread to sleep
 					try {
 						// Sleep for a second

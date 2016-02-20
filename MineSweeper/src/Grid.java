@@ -74,69 +74,69 @@ public class Grid extends JPanel implements MouseListener {
             //Attempt to get the image
             Image img = ImageIO.read(getClass().getResource("Images/blankStart.gif"));
             //Scale the image properly
-            Image newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            Image newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             //Create the icon from the image
             blankStart = new ImageIcon(newimg);
 
 
             img = ImageIO.read(getClass().getResource("Images/blankPressed.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             blankPressed = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/bomb1.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             mine1 = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/bomb2.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             mine2 = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/bomb3.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             mine3 = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/bomb4.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             mine4 = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/bomb5.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             mine5 = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/bomb6.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             mine6 = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/bomb7.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             mine7 = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/bomb8.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             mine8 = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/bombPressed.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             minePressed = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/bombRevealed.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             mineRevealed = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/flag.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             flag = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/questionStart.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             questionStart = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/questionPressed.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             questionPressed = new ImageIcon(newimg);
 
             img = ImageIO.read(getClass().getResource("Images/wrongFlag.gif"));
-            newimg = img.getScaledInstance(26,26, Image.SCALE_DEFAULT);
+            newimg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             wrongFlag = new ImageIcon(newimg);
 
 

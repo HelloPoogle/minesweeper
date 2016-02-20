@@ -66,7 +66,7 @@ public class Display {
 			for ( int i = 0; i < 11; i++ ) {
 				// Read the image and initialize digits array
 				Image image = ImageIO.read (
-					getClass ().getResource ( "Images/countdown" + (i - 1) + ".gif" )
+					getClass ().getResource ( "Images/countdown" + ( i - 1 ) + ".gif" )
 				);
 				this.digits [ i ] = new ImageIcon ( image );
 			}
@@ -110,28 +110,25 @@ public class Display {
 	protected void render ( int value ) {
 		// Update current value
 		this.current = value;
-
 		// Get the digit for each numbers place
 		int hundred = value / 100;
 		int ten = value % 100 / 10;
 		int one = value % 10;
-
-		//If the current value is negative
-		if (this.current < 0){
-			//Display a minus sign
+		// If the current value is negative
+		if ( this.current < 0 ) {
+			// Display a minus sign
 			hundred = 0;
-			//Get the absolute value of the number
-			value = Math.abs(value);
+			// Get the absolute value of the number
+			value = Math.abs ( value );
 			ten = value % 100 / 10;
 			one = value % 10;
-
 			// Update each label based on numbers place
 			this.labels [ 0 ].setIcon ( this.digits [ hundred ] );
 			this.labels [ 1 ].setIcon ( this.digits [ ten + 1 ] );
 			this.labels [ 2 ].setIcon ( this.digits [ one + 1 ] );
 		}
-		//Otherwise the current value is positive
-		else{
+		// Otherwise the current value is positive
+		else {
 			// Update each label based on numbers place
 			this.labels [ 0 ].setIcon ( this.digits [ hundred + 1 ] );
 			this.labels [ 1 ].setIcon ( this.digits [ ten + 1 ] );
