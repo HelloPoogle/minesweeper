@@ -400,6 +400,12 @@ public class Grid extends JPanel implements MouseListener {
 
         //If the left mouse button was released
         if( e.getButton() == 1){
+            //If the smiley icon is an O face
+            if ( board.smiley.current == Smiley.Type.SMILE_O ){
+                // Change the smiley to the start icon since the mouse was released
+                board.smiley.change ( Smiley.Type.SMILE_START);
+            }
+            
             //If the game has not started yet,
             if(gameStart == 0) {
                 //Attempt to start the game and initialize field
@@ -449,6 +455,15 @@ public class Grid extends JPanel implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        //If the left mouse button is pressed
+        if ( e.getButton () == 1 ) {
+            //Check if the smiley is the start icon
+            if ( board.smiley.current != Smiley.Type.SMILE_START ) {
+            	return;
+            }
+            //If so, change the icon to smiley O face upon a press
+            board.smiley.change ( Smiley.Type.SMILE_O);
+        }
     }
 
 

@@ -66,7 +66,7 @@ public class Board extends JFrame implements MouseListener {
 	 * This data member is a Smiley instance which extends from the JLabel class.
 	 * @var     Smiley          smiley              Instance of the Smiley class
 	 */
-	private Smiley smiley;
+	protected Smiley smiley;
 
 	/**
 	 * This data member is used to display the number of mines left to mark on the board.
