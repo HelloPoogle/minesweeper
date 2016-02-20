@@ -61,9 +61,9 @@ public class Grid extends JPanel implements MouseListener {
         //Fill the grid with blank icons
         initializeGridIcons();
 
-        //Game has not started and 0 mines have been flagged
+        //Game has not started and 10 mines need to be flagged;
         gameStart = 0;
-        flagCount = 0;
+        flagCount = 10;
 
     }
 
@@ -218,14 +218,18 @@ public class Grid extends JPanel implements MouseListener {
             //Change icon to a flag
             l.setIcon(flag);
             //Increment number of mines flagged
-            flagCount++;
+            flagCount--;
+            //Update the flag display
+            board.updateFoundGame(flagCount);
         }
         //else if the label is a flag
         else if(l.getIcon() == flag){
             //Change icon to a question mark
             l.setIcon(questionStart);
             //Decrement number of mines flagged (since a question mark must be the successor of a flag)
-            flagCount--;
+            flagCount++;
+            //Update the flag display
+            board.updateFoundGame(flagCount);
         }
         //else if the label is a question mark
         else if (l.getIcon() == questionStart){
@@ -374,6 +378,7 @@ public class Grid extends JPanel implements MouseListener {
     private int leftReleasedStart(JLabel l){
         //Only if the label is unpressed blank, initialize the minefield and change the icon
         if(l.getIcon() == blankStart){
+            System.out.println("GOT HERE");
             //Initialize the mine locations, avoiding the pressed label
             initializeGridMines(l);
 
@@ -410,11 +415,21 @@ public class Grid extends JPanel implements MouseListener {
                     gameStart = 1;
                     board.startTimerGame();
                 }
+
             }
+            //The game has started
+            else{
+                //If the icon is blank
+                if(l.getIcon() == blankStart) {
+                    //Calculate and reveal
+                    setSurroundingMineCount(l);
+                }
+            }
+
             //If the game has started,
             //change the label after checking for mines, end game if necessary
 
-            setSurroundingMineCount(l);
+            //setSurroundingMineCount(l);
 
             //If no mine underneath, calculate surrounding mines and show number or blank tile
             //else minePressed, show board
