@@ -77,8 +77,16 @@ public class Timer extends Display {
 					}
 					// Check again if the flag is true after sleep
 					if ( Timer.run ) {
-						// Increment the timer and render it in the GUI
-						render ( Timer.time++ );
+						// If the timer is 999, do not increment
+						if(Timer.time == 999){
+							// Render the timer in the GUI
+							render( Timer.time);
+						}
+						//If the timer is not 999, increment
+						else {
+							// Render the updated timer in the GUI
+							render(Timer.time++);
+						}
 					}
 				}
 			}
