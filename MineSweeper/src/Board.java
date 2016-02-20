@@ -568,9 +568,9 @@ public class Board extends JFrame implements MouseListener {
 		// Check if the left button click was triggered
 		if ( e.getButton () == MouseEvent.BUTTON1 && name.equals ( "Smiley" ) ) {
 			// Check if we can change it
-			if ( this.smiley.current != Smiley.Type.SMILE_START ) {
-				return;
-			}
+			//if ( this.smiley.current != Smiley.Type.SMILE_START ) {
+			//	return;
+			//}
 			// Change the smiley to the pressed icon
 			this.smiley.change ( Smiley.Type.SMILE_PRESSED );
 		}

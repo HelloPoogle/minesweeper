@@ -38,7 +38,7 @@ public class Grid extends JPanel implements MouseListener {
     protected Board board;
 
     //Checker to see if startTimerGame method has already been called
-    //0 = false, 1 = true;
+    //-1 = game lost and not yet reset, 0 = not started, 1 = started,
     private int gameStart;
 
     //Number of mines that have been flagged
@@ -382,11 +382,8 @@ public class Grid extends JPanel implements MouseListener {
             //Initialize the mine locations, avoiding the pressed label
             initializeGridMines(l);
 
-            //Change the icon to pressed, showing the number of surrounding mines
-            setSurroundingMineCount(l);
-
-            //Successfully processed the start of the game
-            return 1;
+            //Change the icon to pressed, showing the number of surrounding mines, return if successful
+            return setSurroundingMineCount(l);
         }
 
         //The icon was not blank, so no press registered
@@ -404,9 +401,8 @@ public class Grid extends JPanel implements MouseListener {
         //If the left mouse button was released
         if( e.getButton() == 1){
             //If the game has not started yet,
-            //start the game, create the minefield, and change the label after checking for mines
             if(gameStart == 0) {
-                //Attempt to start the game
+                //Attempt to start the game and initialize field
                 int check = leftReleasedStart(l);
 
                 //If the game was successfully started (The icon was originally blank)
@@ -417,29 +413,29 @@ public class Grid extends JPanel implements MouseListener {
                 }
 
             }
-            //The game has started
-            else{
+            //If the game is in progress
+            else if (gameStart == 1){
                 //If the icon is blank
                 if(l.getIcon() == blankStart) {
-                    //Calculate and reveal
-                    setSurroundingMineCount(l);
+                    //Calculate and reveal, check if a mine has exploded
+
+                    //If the user pressed a mine
+                    if (setSurroundingMineCount(l) == 0){
+                        //Update checker variable and lose game
+                        gameStart = -1;
+                        board.loseGame();
+                    }
                 }
             }
-
-            //If the game has started,
-            //change the label after checking for mines, end game if necessary
-
-            //setSurroundingMineCount(l);
-
-            //If no mine underneath, calculate surrounding mines and show number or blank tile
-            //else minePressed, show board
+            //If the game is lost and not yet reset
+            else if(gameStart == -1){
+                //Do nothing
+            }
         }
 
 
         //If the right mouse button was released
         if (e.getButton() == 3){
-
-
             //Process the right click at the label
             rightReleasedCycle(l);
         }
