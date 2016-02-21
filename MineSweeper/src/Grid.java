@@ -16,8 +16,16 @@ public class Grid extends JPanel implements MouseListener {
     //Array of surrounding mine counts for each tile
     private int[][] revealedArray;
 
-    //Array that keeps track of recursion
+    //Array that keeps track of iteration
     private int[][] recursionTracker;
+
+    /**
+     * Array that holds flag and question mark locations on the grid
+     * 0 = Blank icon
+     * 1 = Flag icon
+     * 2 = Question mark icon
+     */
+    private int[][] flagLocations;
 
     //Icons that will be used for the label display
     private ImageIcon blankStart;       //Initial label
@@ -50,8 +58,13 @@ public class Grid extends JPanel implements MouseListener {
     //Number of mines that have been flagged
     private int flagCount;
 
-    //Constructs a 10x10 game grid
+    //Keeps track of the tiles cleared so far
+    private int clearedCount;
 
+
+
+
+    //Constructs a 10x10 game grid
     Grid( Board board ){
 
         //Create a new 10x10 grid of labels that contains the game grid
@@ -66,6 +79,9 @@ public class Grid extends JPanel implements MouseListener {
 
         //Fill the grid with blank icons
         initializeGridIcons();
+
+        //Initialize the array of flags
+        flagLocations = new int[10][10];
 
         //Game has not started and 10 mines need to be flagged;
         gameStart = 0;
@@ -217,12 +233,17 @@ public class Grid extends JPanel implements MouseListener {
         }
     }
 
+    private void setFlagLocations(JLabel l){
+
+    }
 
     private void rightReleasedCycle(JLabel l){
         //If the label is blank
         if(l.getIcon() == blankStart){
             //Change icon to a flag
             l.setIcon(flag);
+            //Enumerate on the flag location holder
+            setFlagLocations(l);
             //Increment number of mines flagged
             flagCount--;
             //Update the flag display
@@ -365,133 +386,6 @@ public class Grid extends JPanel implements MouseListener {
         }
     }
 
-
-    private void revealRecursive(int x, int y){
-        //Top-Left
-        if(((x-1) >= 0) && ((y-1) >= 0)) {
-            if (revealedArray[x - 1][y - 1] != 0) {
-                setRevealedIcon(gridArray[x - 1][y - 1], revealedArray[x - 1][y - 1]);
-                return;
-            }
-            else{
-                setRevealedIcon(gridArray[x - 1][y - 1], revealedArray[x - 1][y - 1]);
-                if(recursionTracker[x-1][y-1] != 100) {
-                    recursionTracker[x-1][y-1]++;
-                    revealRecursive(x - 1, y - 1);
-                }
-            }
-        }
-
-        //Top-Center
-        if((x-1) >= 0) {
-            if (revealedArray[x - 1][y] != 0) {
-                setRevealedIcon(gridArray[x - 1][y], revealedArray[x - 1][y]);
-                return;
-            }
-            else{
-                setRevealedIcon(gridArray[x - 1][y], revealedArray[x - 1][y]);
-                if(recursionTracker[x-1][y] != 100) {
-                    recursionTracker[x-1][y]++;
-                    revealRecursive(x - 1, y);
-                }
-            }
-        }
-
-        //Top-Right
-        if(((x-1) >= 0) && ((y+1) <= 9)) {
-            if (revealedArray[x - 1][y + 1] != 0) {
-                setRevealedIcon(gridArray[x - 1][y + 1], revealedArray[x - 1][y + 1]);
-                return;
-            }
-            else{
-                setRevealedIcon(gridArray[x - 1][y + 1], revealedArray[x - 1][y + 1]);
-                if(recursionTracker[x-1][y+1] != 100) {
-                    recursionTracker[x-1][y+1]++;
-                    revealRecursive(x - 1, y + 1);
-                }
-            }
-        }
-
-        //Center-Left
-        if((y-1) >= 0) {
-            if (revealedArray[x][y - 1] != 0) {
-                setRevealedIcon(gridArray[x][y - 1], revealedArray[x][y - 1]);
-                return;
-            }
-            else{
-                setRevealedIcon(gridArray[x][y - 1], revealedArray[x][y - 1]);
-                if(recursionTracker[x][y-1] != 100) {
-                    recursionTracker[x][y-1]++;
-                    revealRecursive(x, y - 1);
-                }
-            }
-        }
-
-        //Center-Right
-        if((y+1) <= 9) {
-            if (revealedArray[x][y + 1] != 0) {
-                setRevealedIcon(gridArray[x][y + 1], revealedArray[x][y + 1]);
-                return;
-            }
-            else{
-                setRevealedIcon(gridArray[x][y + 1], revealedArray[x][y + 1]);
-                if(recursionTracker[x][y+1] != 100) {
-                    recursionTracker[x][y+1]++;
-                    revealRecursive(x, y + 1);
-                }
-            }
-        }
-
-        //Bottom-Left
-        if(((x+1) <= 9) && ((y-1) >= 0)) {
-            if (revealedArray[x + 1][y - 1] != 0) {
-                setRevealedIcon(gridArray[x + 1][y - 1], revealedArray[x + 1][y - 1]);
-                return;
-            }
-            else{
-                setRevealedIcon(gridArray[x + 1][y - 1], revealedArray[x + 1][y - 1]);
-                if(recursionTracker[x+1][y-1] != 100) {
-                    recursionTracker[x+1][y-1]++;
-                    revealRecursive(x + 1, y - 1);
-                }
-            }
-        }
-
-        //Bottom-Center
-        if((x+1) <= 9) {
-            if (revealedArray[x + 1][y] != 0) {
-                setRevealedIcon(gridArray[x + 1][y], revealedArray[x + 1][y]);
-                return;
-            }
-            else{
-                setRevealedIcon(gridArray[x + 1][y], revealedArray[x + 1][y]);
-                if(recursionTracker[x+1][y] != 100) {
-                    recursionTracker[x+1][y]++;
-                    revealRecursive(x + 1, y );
-                }
-            }
-        }
-
-        //Bottom-Right
-        if(((x+1) <= 9) && ((y+1) <= 9)) {
-            if (revealedArray[x + 1][y + 1] != 0) {
-                setRevealedIcon(gridArray[x + 1][y + 1], revealedArray[x + 1][y + 1]);
-                return;
-            }
-            else{
-                setRevealedIcon(gridArray[x + 1][y + 1], revealedArray[x + 1][y + 1]);
-                if(recursionTracker[x+1][y+1] != 100) {
-                    recursionTracker[x+1][y+1]++;
-                    revealRecursive(x + 1, y + 1);
-                }
-            }
-        }
-
-
-    }
-
-
-
     private void revealIterative(int x, int y){
         int i = 0;
         int a,b;
@@ -503,12 +397,27 @@ public class Grid extends JPanel implements MouseListener {
            if ((x < 10) && (y < 10) && (x >= 0) && (y >= 0)) {
                //If the space is blank
                if (revealedArray[x][y] == 0) {
-                   //Mark it as already iterated over
-                   recursionTracker[x][y] = -1;
-                   //Set icon to blank
-                   gridArray[x][y].setIcon(blankPressed);
-                   //Decrease iteration count
-                   count--;
+                   //If the icon is blank
+                   if (gridArray[x][y].getIcon() == blankStart) {
+                       //Mark it as already iterated over
+                       recursionTracker[x][y] = -1;
+                       //Set icon to blank
+                       gridArray[x][y].setIcon(blankPressed);
+
+                       //Increase number of cleared tiles
+                       clearedCount++;
+                       //Decrease iteration count
+                       count--;
+                   }
+                   //If the icon has a flag or question mark
+                   else{
+                       //Mark it as already iterated over
+                       recursionTracker[x][y] = -1;
+
+                       //Decrease iteration count
+                       count--;
+                   }
+
                }
 
            }
@@ -664,27 +573,48 @@ public class Grid extends JPanel implements MouseListener {
                     y = y - 1;
                     //If the coordinates are not out of bounds
                     if ((x < 10) && (y < 10) && (x >= 0) && (y >= 0)) {
-                        //If the icon is not a bomb, reveal it
+                        //If the icon is not a mine, reveal it
                         if(revealedArray[x][y] != -1){
                             setRevealedIcon(gridArray[x][y], revealedArray[x][y]);
+
+                            //Set the number as iterated over
+                            if(recursionTracker[x][y] == 0) {
+                                recursionTracker[x][y] = 1;
+                                //Increment cleared tile count
+                                clearedCount++;
+                            }
                         }
                     }
 
                     y = y + 1;
                     //If the coordinates are not out of bounds
                     if ((x < 10) && (y < 10) && (x >= 0) && (y >= 0)) {
-                        //If the icon is not a bomb, reveal it
+                        //If the icon is not a mine, reveal it
                         if(revealedArray[x][y] != -1){
                             setRevealedIcon(gridArray[x][y], revealedArray[x][y]);
+
+                            //Set the number as iterated over
+                            if(recursionTracker[x][y] == 0) {
+                                recursionTracker[x][y] = 1;
+                                //Increment cleared tile count
+                                clearedCount++;
+                            }
                         }
                     }
 
                     y = y + 1;
                     //If the coordinates are not out of bounds
                     if ((x < 10) && (y < 10) && (x >= 0) && (y >= 0)) {
-                        //If the icon is not a bomb, reveal it
+                        //If the icon is not a mine, reveal it
                         if(revealedArray[x][y] != -1){
                             setRevealedIcon(gridArray[x][y], revealedArray[x][y]);
+
+                            //Set the number as iterated over
+                            if(recursionTracker[x][y] == 0) {
+                                recursionTracker[x][y] = 1;
+                                //Increment cleared tile count
+                                clearedCount++;
+                            }
                         }
                     }
 
@@ -692,18 +622,32 @@ public class Grid extends JPanel implements MouseListener {
                     y = y - 2;
                     //If the coordinates are not out of bounds
                     if ((x < 10) && (y < 10) && (x >= 0) && (y >= 0)) {
-                        //If the icon is not a bomb, reveal it
+                        //If the icon is not a mine, reveal it
                         if(revealedArray[x][y] != -1){
                             setRevealedIcon(gridArray[x][y], revealedArray[x][y]);
+
+                            //Set the number as iterated over
+                            if(recursionTracker[x][y] == 0) {
+                                recursionTracker[x][y] = 1;
+                                //Increment cleared tile count
+                                clearedCount++;
+                            }
                         }
                     }
 
                     y = y + 2;
                     //If the coordinates are not out of bounds
                     if ((x < 10) && (y < 10) && (x >= 0) && (y >= 0)) {
-                        //If the icon is not a bomb, reveal it
+                        //If the icon is not a mine, reveal it
                         if(revealedArray[x][y] != -1){
                             setRevealedIcon(gridArray[x][y], revealedArray[x][y]);
+
+                            //Set the number as iterated over
+                            if(recursionTracker[x][y] == 0) {
+                                recursionTracker[x][y] = 1;
+                                //Increment cleared tile count
+                                clearedCount++;
+                            }
                         }
                     }
 
@@ -711,27 +655,48 @@ public class Grid extends JPanel implements MouseListener {
                     y = y - 2;
                     //If the coordinates are not out of bounds
                     if ((x < 10) && (y < 10) && (x >= 0) && (y >= 0)) {
-                        //If the icon is not a bomb, reveal it
+                        //If the icon is not a mine, reveal it
                         if(revealedArray[x][y] != -1){
                             setRevealedIcon(gridArray[x][y], revealedArray[x][y]);
+
+                            //Set the number as iterated over
+                            if(recursionTracker[x][y] == 0) {
+                                recursionTracker[x][y] = 1;
+                                //Increment cleared tile count
+                                clearedCount++;
+                            }
                         }
                     }
 
                     y = y + 1;
                     //If the coordinates are not out of bounds
                     if ((x < 10) && (y < 10) && (x >= 0) && (y >= 0)) {
-                        //If the icon is not a bomb, reveal it
+                        //If the icon is not a mine, reveal it
                         if(revealedArray[x][y] != -1){
                             setRevealedIcon(gridArray[x][y], revealedArray[x][y]);
+
+                            //Set the number as iterated over
+                            if(recursionTracker[x][y] == 0) {
+                                recursionTracker[x][y] = 1;
+                                //Increment cleared tile count
+                                clearedCount++;
+                            }
                         }
                     }
 
                     y = y + 2;
                     //If the coordinates are not out of bounds
                     if ((x < 10) && (y < 10) && (x >= 0) && (y >= 0)) {
-                        //If the icon is not a bomb, reveal it
+                        //If the icon is not a mine, reveal it
                         if(revealedArray[x][y] != -1){
                             setRevealedIcon(gridArray[x][y], revealedArray[x][y]);
+
+                            //Set the number as iterated over
+                            if(recursionTracker[x][y] == 0) {
+                                recursionTracker[x][y] = 1;
+                                //Increment cleared tile count
+                                clearedCount++;
+                            }
                         }
                     }
 
@@ -751,20 +716,21 @@ public class Grid extends JPanel implements MouseListener {
             for(y = 0; y < 10; y++){
                 //If the label was found
                 if(gridArray[x][y] == l){
-                    //Bomb was pressed
+                    //Mine was pressed
                     if(revealedArray[x][y] == -1){
                         setRevealedIcon(l, -1);
                         return -1;
                     }
-                    //No surrounding bombs (blank)
+                    //No surrounding mines (blank)
                     else if(revealedArray[x][y] == 0){
-                        //revealRecursive(x,y);
                         revealIterative(x,y);
                         return 1;
                     }
-                    //Number of surrounding bombs
+                    //Number of surrounding mines
                     else{
                         setRevealedIcon(l, revealedArray[x][y]);
+                        //Increment cleared tile count
+                        clearedCount++;
                         return 1;
                     }
 
@@ -783,7 +749,7 @@ public class Grid extends JPanel implements MouseListener {
             //Initialize the mine locations, avoiding the pressed label
             initializeGridMines(l);
 
-            //Create the array of revealed bomb counts
+            //Create the array of revealed mine counts
             createRevealedArray();
 
             //Change the icon to pressed, showing the number of surrounding mines, return if successful
@@ -816,6 +782,8 @@ public class Grid extends JPanel implements MouseListener {
                 //Attempt to start the game and initialize field
                 check = leftReleasedStart(l);
 
+                System.out.println("CLEARED COUNT: " + clearedCount);
+
                 //If the game was successfully started (The icon was originally blank)
                 if(check == 1){
                     //The game has started, update the checker variable
@@ -831,17 +799,23 @@ public class Grid extends JPanel implements MouseListener {
                 if(l.getIcon() == blankStart) {
                     //Calculate and reveal, check if a mine has exploded
                     check = revealMineCount(l);
+
+                    System.out.println("CLEARED COUNT: " + clearedCount);
+
                     //If the user pressed a mine
                     if (check == -1){
                         //Update checker variable and lose game
                         gameStart = -1;
                         board.loseGame();
                     }
-                    //If the user won the game (TODO)
+                    //Potential win state
                     else{
-                        //Update checker variable and win game
-                        gameStart = -1;
-                        board.winGame(board.timer.current);
+                        //If the user won the game
+                        if(clearedCount == 90) {
+                            //Update checker variable and win game
+                            gameStart = -1;
+                            board.winGame(board.timer.current);
+                        }
                     }
                 }
             }
@@ -872,10 +846,6 @@ public class Grid extends JPanel implements MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
     public void mousePressed(MouseEvent e) {
         //Get the label that was targeted
         JLabel l = (JLabel) e.getSource();
@@ -888,13 +858,16 @@ public class Grid extends JPanel implements MouseListener {
         if (e.getButton () == 1) {
             //If the smiley is the start icon
             if (board.smiley.current != Smiley.Type.SMILE_START) {
-            	return;
+                return;
             }
             //Change the smiley to a smiley O icon
             board.smiley.change (Smiley.Type.SMILE_O);
         }
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
 
     @Override
     public void mouseEntered(MouseEvent e) {
