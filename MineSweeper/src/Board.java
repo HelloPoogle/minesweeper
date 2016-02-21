@@ -306,31 +306,41 @@ public class Board extends JFrame implements MouseListener {
 		// Populate lines with data
 		frame.panel.add (
 			new JLabel (
-				"Find the empty squares while avoiding the mines. The faster you clear the board, the"
+				"Find the empty squares while avoiding the mines."
 			),
 			frame.options ( 0, 0, 1.0, 1.0, GridBagConstraints.WEST )
 		);
 		frame.panel.add (
-			new JLabel (
-				"better your score.  The rules in Minesweeper are simple: Uncover a mine and the game"
-			),
-			frame.options ( 0, 1, 1.0, 1.0, GridBagConstraints.WEST )
+				new JLabel (
+						"The faster you clear the board, the better your score."
+				),
+				frame.options ( 0, 1, 1.0, 1.0, GridBagConstraints.WEST )
 		);
 		frame.panel.add (
 			new JLabel (
-				"ends, uncover an empty square and you keep playing, uncover a number and it tells you"
+				"The rules in Minesweeper are simple: Uncover a mine and the game ends,"
 			),
 			frame.options ( 0, 2, 1.0, 1.0, GridBagConstraints.WEST )
 		);
 		frame.panel.add (
 			new JLabel (
-				"how many mines lay hidden in the eight surrounding squares-information you use to"
+				"uncover an empty square and you keep playing, uncover a number and it tells you"
 			),
 			frame.options ( 0, 3, 1.0, 1.0, GridBagConstraints.WEST )
 		);
 		frame.panel.add (
-			new JLabel ( "deduce which nearby squares are safe to click." ),
+			new JLabel (
+				"how many mines lay hidden in the eight surrounding squares - information you use to"
+			),
 			frame.options ( 0, 4, 1.0, 1.0, GridBagConstraints.WEST )
+		);
+		frame.panel.add (
+			new JLabel ( "deduce which nearby squares are safe to click." ),
+			frame.options ( 0, 5, 1.0, 1.0, GridBagConstraints.WEST )
+		);
+		frame.panel.add (
+				new JLabel ( "Right click to flag a potential mine or set a question mark. Press the smiley to reset." ),
+				frame.options ( 0, 6, 1.0, 1.0, GridBagConstraints.WEST )
 		);
 		// Render out the frame
 		frame.display ();
@@ -529,30 +539,14 @@ public class Board extends JFrame implements MouseListener {
 	public void mouseEntered ( MouseEvent e ) {}
 
 	/**
-	 * This function gets triggered by the mouse event listener. It tracks when there is a mouse
-	 * click and only triggers a change when it sees that it is a JButton that is used in the high
-	 * score substitution form.
+	 * This does not get run, but its sister functions do.  It is required for mouse listeners to
+	 * have definitions for there functions in the same scope as the sister functions.
 	 * @param   MouseEvent          e               The event object passed by the mouse listener
 	 * @return  void
 	 */
 	@Override
 	public void mouseClicked ( MouseEvent e ) {
-		// Get the class type
-		String name = e.getComponent ().getClass ().getName ();
-		// Check if the left button click was triggered
-		if ( e.getButton () == MouseEvent.BUTTON1 && name.equals ( "javax.swing.JButton" ) ) {
-			JButton label = ( JButton ) e.getSource ();
-			// Check to see that there is something in text area
-			if ( this.inputName.getText ().trim ().equals ("") ) {
-				return;
-			}
-			// Insert high score into data file
-			this.highScores.insert ( this.score, this.inputName.getText () );
-			// Close the currently open window
-			this.frame.dispatchEvent ( new WindowEvent ( this.frame, WindowEvent.WINDOW_CLOSING ) );
-			// Display the high scores leader board
-			this.highScores.display ();
-		}
+
 	}
 
 	/**
@@ -587,8 +581,8 @@ public class Board extends JFrame implements MouseListener {
 
 	/**
 	 * This function gets triggered by the mouse event listener. Whenever there is a mouse release
-	 * and if it deals with the Smiley class, then something happens.  This basically manages the
-	 * smiley label icons.
+	 * and if it deals with the Smiley class or the JButton that is used in the High Score form,
+	 * then something happens.  This basically manages the smiley label icons and score submission.
 	 * @param   MouseEvent          e               The event object passed by the mouse listener
 	 * @return  void
 	 */
@@ -615,6 +609,21 @@ public class Board extends JFrame implements MouseListener {
 			}
 			// Change smiley back to the default icon
 			this.smiley.change ( Smiley.Type.SMILE_START );
+		}
+
+		//Check if left button was triggered on any button
+		if ( e.getButton () == MouseEvent.BUTTON1 && name.equals ( "javax.swing.JButton" ) ) {
+			JButton label = ( JButton ) e.getSource ();
+			// Check to see that there is something in text area
+			if ( this.inputName.getText ().trim ().equals ("") ) {
+				return;
+			}
+			// Insert high score into data file
+			this.highScores.insert ( this.score, this.inputName.getText () );
+			// Close the currently open window
+			this.frame.dispatchEvent ( new WindowEvent ( this.frame, WindowEvent.WINDOW_CLOSING ) );
+			// Display the high scores leader board
+			this.highScores.display ();
 		}
 	}
 

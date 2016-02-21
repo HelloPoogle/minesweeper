@@ -144,11 +144,11 @@ public class HighScores {
 		for ( int i = 0; i < this.max; i++ ) {
 			// Check to see if the object is null
 			if ( this.scores [ i ] == null ) {
-				// If it is then break and return false
+				// If it is then break and return true
 				return true;
 			}
 			// Otherwise check to see if the score is equal or higher then current
-			else if ( score >= this.scores [ i ].score ) {
+			else if ( score <= this.scores [ i ].score ) {
 				// If it is then return true
 				return true;
 			}
@@ -175,7 +175,7 @@ public class HighScores {
 			// Iterate through and find the position
 			for ( int i = 0; i < this.max; i++ ) {
 				// Check to see if index is null or if it is eligible
-				if ( this.scores [ i ] == null || score >= this.scores [ i ].score ) {
+				if ( this.scores [ i ] == null || score <= this.scores [ i ].score ) {
 					// Save position and break
 					position = i;
 					break;
@@ -230,7 +230,7 @@ public class HighScores {
 		Window frame = new Window ( "High Scores", 300, 300, 12, 3 );
 		// Create header labels
 		frame.panel.add (
-			frame.bold ( new JLabel ( "Score" ) ),
+			frame.bold ( new JLabel ( "Time" ) ),
 			frame.options ( 1, 0, 2.0, 1.0, GridBagConstraints.CENTER )
 		);
 		frame.panel.add (
