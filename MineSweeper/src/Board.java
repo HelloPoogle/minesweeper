@@ -78,7 +78,7 @@ public class Board extends JFrame implements MouseListener {
 	 * This data member keeps track of the time ongoing after thee first move is made.
 	 * @var     Timer           timer               The instance of Timer which extends from JPanel
 	 */
-	private Timer timer;
+	protected Timer timer;
 
 	/**
 	 * This data member holds the instance of HighScores which manages everything to do with the
