@@ -58,11 +58,7 @@ public class Grid extends JPanel implements MouseListener {
     //Number of mines that have been flagged
     private int flagCount;
 
-    //Keeps track of the tiles cleared so far
-    private int clearedCount;
-
-
-
+    
 
     //Constructs a 10x10 game grid
     Grid( Board board ){
@@ -82,6 +78,9 @@ public class Grid extends JPanel implements MouseListener {
 
         //Initialize the array of flags
         flagLocations = new int[10][10];
+
+        //Initialize the iteration tracker
+        recursionTracker = new int[10][10];
 
         //Game has not started and 10 mines need to be flagged;
         gameStart = 0;
@@ -234,7 +233,38 @@ public class Grid extends JPanel implements MouseListener {
     }
 
     private void setFlagLocations(JLabel l){
+        int a, b;
 
+        for(a = 0; a < 10; a++){
+            for(b = 0; b < 10; b++){
+                //If the icon is found
+                if(l == gridArray[a][b]){
+                    //Enumerate on the flag location holder
+                    if(l.getIcon() == blankStart) {
+                        flagLocations[a][b] = 0;
+                    }
+                    else if(l.getIcon() == flag) {
+                        flagLocations[a][b] = 1;
+                    }
+                    else if(l.getIcon() == questionStart) {
+                        flagLocations[a][b] = 2;
+                    }
+                }
+            }
+        }
+
+        //Make sure flags are set on the grid array
+        for(a = 0; a < 10; a++){
+            for(b = 0; b < 10; b++){
+                if(flagLocations[a][b] == 1) {
+                    gridArray[a][b].setIcon(flag);
+                }
+                else if (flagLocations[a][b] == 2){
+                    gridArray[a][b].setIcon(questionStart);
+                }
+
+            }
+        }
     }
 
     private void rightReleasedCycle(JLabel l){
@@ -253,6 +283,8 @@ public class Grid extends JPanel implements MouseListener {
         else if(l.getIcon() == flag){
             //Change icon to a question mark
             l.setIcon(questionStart);
+            //Enumerate on the flag location holder
+            setFlagLocations(l);
             //Decrement number of mines flagged (since a question mark must be the successor of a flag)
             flagCount++;
             //Update the flag display
@@ -262,10 +294,9 @@ public class Grid extends JPanel implements MouseListener {
         else if (l.getIcon() == questionStart){
             //Change icon to blank
             l.setIcon(blankStart);
+            //Enumerate on the flag location holder
+            setFlagLocations(l);
         }
-
-        //Check the flagCount
-        System.out.println("Flag Count: " + flagCount);
 
     }
 
@@ -336,13 +367,6 @@ public class Grid extends JPanel implements MouseListener {
                 count = 0;
             }
         }
-
-
-        System.out.println();
-        y = 0;
-        for(x = 0; x < 10; x++){
-                System.out.println(revealedArray[x][y] + "," + revealedArray[x][y+1] + "," + revealedArray[x][y+2] + "," + revealedArray[x][y+3] + "," + revealedArray[x][y+4] + "," + revealedArray[x][y+5] + "," + revealedArray[x][y+6] + "," + revealedArray[x][y+7] + "," + revealedArray[x][y+8] + "," + revealedArray[x][y+9]);
-        }
     }
 
 
@@ -390,9 +414,26 @@ public class Grid extends JPanel implements MouseListener {
         int i = 0;
         int a,b;
         int count = 1;
-        recursionTracker = new int[10][10];
+        int[][] recursionTracker = new int[10][10];
 
         do{
+            System.out.println("GOT HERE ITERATIVE 1");
+
+            a = 0;
+            b = 0;
+            for (a = 0; a < 10; a++){
+                System.out.println(revealedArray[a][b] + "," + revealedArray[a][b+1] + "," + revealedArray[a][b+2] + "," + revealedArray[a][b+3] + "," + revealedArray[a][b+4] + "," + revealedArray[a][b+5] + "," + revealedArray[a][b+6] + "," + revealedArray[a][b+7] + "," + revealedArray[a][b+8] + "," + revealedArray[a][b+9]);
+            }
+            a = 0;
+
+            System.out.println();
+            a = 0;
+            b = 0;
+            for (a = 0; a < 10; a++){
+                System.out.println(recursionTracker[a][b] + "," + recursionTracker[a][b+1] + "," + recursionTracker[a][b+2] + "," + recursionTracker[a][b+3] + "," + recursionTracker[a][b+4] + "," + recursionTracker[a][b+5] + "," + recursionTracker[a][b+6] + "," + recursionTracker[a][b+7] + "," + recursionTracker[a][b+8] + "," + recursionTracker[a][b+9]);
+            }
+            a = 0;
+
            //If the coordinates are not out of bounds
            if ((x < 10) && (y < 10) && (x >= 0) && (y >= 0)) {
                //If the space is blank
@@ -404,8 +445,6 @@ public class Grid extends JPanel implements MouseListener {
                        //Set icon to blank
                        gridArray[x][y].setIcon(blankPressed);
 
-                       //Increase number of cleared tiles
-                       clearedCount++;
                        //Decrease iteration count
                        count--;
                    }
@@ -523,7 +562,7 @@ public class Grid extends JPanel implements MouseListener {
                }
            }
 
-           y = y + 2;
+           y = y + 1;
            //If the coordinates are not out of bounds
            if ((x < 10) && (y < 10) && (x >= 0) && (y >= 0)) {
                //If the space is blank
@@ -537,6 +576,8 @@ public class Grid extends JPanel implements MouseListener {
                }
            }
 
+
+
            //Check the tracker for a coordinate
            for(a = 0; a < 10; a++){
                for(b = 0; b < 10; b++){
@@ -548,22 +589,16 @@ public class Grid extends JPanel implements MouseListener {
                }
            }
 
-
-           //System.out.println("GOING TO " + "(" + x + "," + y + ")");
+            System.out.println("COUNT:" + count);
 
         }
         while(count != 0);
 
 
-        System.out.println();
-        b = 0;
-        for(a = 0; a < 10; a++){
-                System.out.println(recursionTracker[a][b] + "," + recursionTracker[a][b+1] + "," + recursionTracker[a][b+2] + "," + recursionTracker[a][b+3] + "," + recursionTracker[a][b+4] + "," + recursionTracker[a][b+5] + "," + recursionTracker[a][b+6] + "," + recursionTracker[a][b+7] + "," + recursionTracker[a][b+8] + "," + recursionTracker[a][b+9]);
-        }
-
-
         for(a = 0; a < 10; a++){
             for (b = 0; b < 10; b++){
+
+                System.out.println("GOT HERE ITERATIVE 2");
                 //If the icon was iterated upon
                 if(recursionTracker[a][b] == -1){
                     x = a;
@@ -580,8 +615,7 @@ public class Grid extends JPanel implements MouseListener {
                             //Set the number as iterated over
                             if(recursionTracker[x][y] == 0) {
                                 recursionTracker[x][y] = 1;
-                                //Increment cleared tile count
-                                clearedCount++;
+
                             }
                         }
                     }
@@ -596,8 +630,7 @@ public class Grid extends JPanel implements MouseListener {
                             //Set the number as iterated over
                             if(recursionTracker[x][y] == 0) {
                                 recursionTracker[x][y] = 1;
-                                //Increment cleared tile count
-                                clearedCount++;
+
                             }
                         }
                     }
@@ -612,8 +645,7 @@ public class Grid extends JPanel implements MouseListener {
                             //Set the number as iterated over
                             if(recursionTracker[x][y] == 0) {
                                 recursionTracker[x][y] = 1;
-                                //Increment cleared tile count
-                                clearedCount++;
+
                             }
                         }
                     }
@@ -629,8 +661,7 @@ public class Grid extends JPanel implements MouseListener {
                             //Set the number as iterated over
                             if(recursionTracker[x][y] == 0) {
                                 recursionTracker[x][y] = 1;
-                                //Increment cleared tile count
-                                clearedCount++;
+
                             }
                         }
                     }
@@ -645,8 +676,7 @@ public class Grid extends JPanel implements MouseListener {
                             //Set the number as iterated over
                             if(recursionTracker[x][y] == 0) {
                                 recursionTracker[x][y] = 1;
-                                //Increment cleared tile count
-                                clearedCount++;
+
                             }
                         }
                     }
@@ -662,8 +692,7 @@ public class Grid extends JPanel implements MouseListener {
                             //Set the number as iterated over
                             if(recursionTracker[x][y] == 0) {
                                 recursionTracker[x][y] = 1;
-                                //Increment cleared tile count
-                                clearedCount++;
+
                             }
                         }
                     }
@@ -678,8 +707,6 @@ public class Grid extends JPanel implements MouseListener {
                             //Set the number as iterated over
                             if(recursionTracker[x][y] == 0) {
                                 recursionTracker[x][y] = 1;
-                                //Increment cleared tile count
-                                clearedCount++;
                             }
                         }
                     }
@@ -694,8 +721,6 @@ public class Grid extends JPanel implements MouseListener {
                             //Set the number as iterated over
                             if(recursionTracker[x][y] == 0) {
                                 recursionTracker[x][y] = 1;
-                                //Increment cleared tile count
-                                clearedCount++;
                             }
                         }
                     }
@@ -707,10 +732,58 @@ public class Grid extends JPanel implements MouseListener {
 
     }
 
+    private void revealGridWon(){
+
+        int a,b,x;
+
+        for(x = 0; x < 10; x++){
+            //Get the coordinates of a mine
+            a = mineArray[x].getX();
+            b = mineArray[x].getY();
+
+            //Flag it on the display
+            gridArray[a][b].setIcon(flag);
+        }
+    }
+
+
+    private void revealGridLost(){
+        int a, b, c;
+
+        //For the entire grid
+        for(a = 0; a < 10; a++){
+            for(b = 0; b < 10; b++) {
+                //For every mine
+                for (c = 0; c < 10; c++) {
+                    //If the position on the grid is a mine
+                    if ((mineArray[c].getX() == a) && (mineArray[c].getY() == b)){
+                        //If the position is blank, or a question mark
+                        if( (gridArray[a][b].getIcon() == blankStart) || (gridArray[a][b].getIcon() == questionStart)) {
+                            //Reveal the mine on the grid
+                            gridArray[a][b].setIcon(mineRevealed);
+                        }
+                        //If the position is a flag, do nothing
+                    }
+                }
+
+                //If the position is a flag
+                if((gridArray[a][b].getIcon() == flag)){
+                    //If there is no mine
+                    if(revealedArray[a][b] != -1) {
+                        //Reveal it as a wrong flag
+                        gridArray[a][b].setIcon(wrongFlag);
+                    }
+                }
+                //If the position is a question mark, do nothing
+
+
+            }
+        }
+    }
 
     private int revealMineCount(JLabel l){
         int x, y;       //Indices
-
+        int a, b;
         //Find the location of the label on the grid
         for(x = 0; x < 10; x++){
             for(y = 0; y < 10; y++){
@@ -724,13 +797,16 @@ public class Grid extends JPanel implements MouseListener {
                     //No surrounding mines (blank)
                     else if(revealedArray[x][y] == 0){
                         revealIterative(x,y);
+
+                        //Reset any flag locations that were revealed
+                        setFlagLocations(l);
+
                         return 1;
                     }
                     //Number of surrounding mines
                     else{
                         setRevealedIcon(l, revealedArray[x][y]);
-                        //Increment cleared tile count
-                        clearedCount++;
+                        System.out.println("GOT HERE NORMAL");
                         return 1;
                     }
 
@@ -741,6 +817,21 @@ public class Grid extends JPanel implements MouseListener {
 
         return 1;
 
+    }
+
+    private int countCleared(){
+        int a,b,count;
+        count = 0;
+
+        for(a = 0; a < 10; a++){
+            for(b = 0; b < 10; b++){
+                if( (gridArray[a][b].getIcon() != blankStart) && (gridArray[a][b].getIcon() != flag) && (gridArray[a][b].getIcon() != questionStart)) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 
     private int leftReleasedStart(JLabel l){
@@ -782,8 +873,6 @@ public class Grid extends JPanel implements MouseListener {
                 //Attempt to start the game and initialize field
                 check = leftReleasedStart(l);
 
-                System.out.println("CLEARED COUNT: " + clearedCount);
-
                 //If the game was successfully started (The icon was originally blank)
                 if(check == 1){
                     //The game has started, update the checker variable
@@ -799,22 +888,39 @@ public class Grid extends JPanel implements MouseListener {
                 if(l.getIcon() == blankStart) {
                     //Calculate and reveal, check if a mine has exploded
                     check = revealMineCount(l);
-
-                    System.out.println("CLEARED COUNT: " + clearedCount);
-
                     //If the user pressed a mine
                     if (check == -1){
-                        //Update checker variable and lose game
+                        //Update checker variable
                         gameStart = -1;
+                        //Set number of mines left to 0
+                        flagCount = 0;
+                        //Update the flag display
+                        board.updateFoundGame(flagCount);
+                        //Reveal the grid
+                        revealGridLost();
+                        //Lose the game
                         board.loseGame();
+
+
                     }
                     //Potential win state
                     else{
-                        //If the user won the game
-                        if(clearedCount == 90) {
-                            //Update checker variable and win game
+                        //If the user successfully cleared 90 tiles
+                        if(countCleared() == 90) {
+                            //Update checker variable
                             gameStart = -1;
+
+                            //Set number of mines left to 0
+                            flagCount = 0;
+                            //Update the flag display
+                            board.updateFoundGame(flagCount);
+
+                            //Reveal the grid
+                            revealGridWon();
+
+                            //Win the game
                             board.winGame(board.timer.current);
+
                         }
                     }
                 }
@@ -824,16 +930,6 @@ public class Grid extends JPanel implements MouseListener {
                 //Do nothing
             }
         }
-
-
-
-
-
-
-
-
-
-
 
 
         //If the right mouse button was released
