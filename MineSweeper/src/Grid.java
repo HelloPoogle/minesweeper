@@ -28,14 +28,14 @@ public class Grid extends JPanel implements MouseListener {
      * Used for the display as well as calculations.
      * @var     JLabel[][]  gameGrid            The game grid that stores all labels(icons)
      */
-    private JLabel[][] gameGrid;
+    protected JLabel[][] gameGrid;
 
     /**
      * Array of Coordinates (x,y) that stores locations of mines on the grid.
      * Used for the display as well as calculations.
      * @var     Coordinate[]    mineLocations       Locations of every mine
      */
-    private Coordinate[] mineLocations;
+    protected Coordinate[] mineLocations;
 
 
     /**
@@ -44,7 +44,7 @@ public class Grid extends JPanel implements MouseListener {
      * or if the label is a mine (stores -1).
      * @var     int[][]     revealedGrid        array storing mine counts for each label
      */
-    private int[][] revealedGrid;
+    protected int[][] revealedGrid;
 
     /**
      * 2D array that holds flag and question mark locations on the grid.
@@ -53,7 +53,7 @@ public class Grid extends JPanel implements MouseListener {
      * 2 = Question mark icon.
      * @var     int[][]     flagLocations       array storing locations of markers
      */
-    private int[][] flagLocations;
+    protected int[][] flagLocations;
 
 
     /**
@@ -107,8 +107,6 @@ public class Grid extends JPanel implements MouseListener {
     private ImageIcon wrongFlag;        //Game end, reveals if an incorrect flag was placed
 
     //END OF DATA MEMBERS
-
-
 
     /**
      * Grid constructor that creates the 10x10 game grid, saves an instance of the Board for later use,
@@ -269,7 +267,7 @@ public class Grid extends JPanel implements MouseListener {
      *                                  placed in order to ensure a game can be played
      * @return  void
      */
-    private void initializeGridMines(JLabel l){
+    protected void initializeGridMines(JLabel l){
         //Create a new mine array
         mineLocations = new Coordinate[10];
 
@@ -481,7 +479,7 @@ public class Grid extends JPanel implements MouseListener {
      * Flags all mine locations after a user has won the game.
      * @return  void
      */
-    private void revealGridWon(){
+    protected void revealGridWon(){
         int a,b;    //Indices
         int   x;    //Iterator
 
@@ -549,7 +547,7 @@ public class Grid extends JPanel implements MouseListener {
      * @param   JLabel      l           The label of the icon to be set
      * @param   int         count       The mine count which dictates the icon to be set
      */
-    private void setRevealedIcon(JLabel l, int count){
+    protected void setRevealedIcon(JLabel l, int count){
         //Change the icon of the current label based on the number of surrounding mines
         switch(count){
             case -1:
@@ -861,7 +859,7 @@ public class Grid extends JPanel implements MouseListener {
      * @param   JLabel      l       The label the user pressed
      * @return  int                 Returns whether the game has started (1) or not(0)
      */
-    private int clickStartGame(JLabel l){
+    protected int clickStartGame(JLabel l){
         //If the label is an unpressed blank
         if(l.getIcon() == blankStart){
             //Initialize the mine locations, avoiding the now pressed label
