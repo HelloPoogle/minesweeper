@@ -13,7 +13,7 @@ package com.minesweeper;
  * @category    Timer
  * @author      Rafael Grigorian
  * @author      Marek Rybakiewicz
- * @license     GNU Public License <http://www.gnu.org/licenses/gpl-3.0.txt>
+ * @license     MIT License <LICENSE.md>
  */
 public class Timer extends Display {
 

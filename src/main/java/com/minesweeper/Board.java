@@ -40,7 +40,7 @@ import javax.imageio.ImageIO;
  * @category    Board
  * @author      Rafael Grigorian
  * @author      Marek Rybakiewicz
- * @license     GNU Public License <http://www.gnu.org/licenses/gpl-3.0.txt>
+ * @license     MIT License <LICENSE.md>
  */
 public class Board extends JFrame implements MouseListener {
 

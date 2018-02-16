@@ -19,7 +19,7 @@ import javax.swing.*;
  * @category    Display
  * @author      Rafael Grigorian
  * @author      Marek Rybakiewicz
- * @license     GNU Public License <http://www.gnu.org/licenses/gpl-3.0.txt>
+ * @license     MIT License <LICENSE.md>
  */
 public class Grid extends JPanel implements MouseListener {
     //BEGINNING OF DATA MEMBERS
